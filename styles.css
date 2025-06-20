@@ -24,8 +24,6 @@ body {
     display: block;
 }
 
-
-
 h1, strong {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
@@ -34,4 +32,106 @@ h1{
     color: white;
     text-align: center;
 }
+
+/* for toggling between maps with buttons */
+#map, #map2 {
+    display: none;
+}
+
+#map.visible, #map2.visible {
+    display: block;
+}
+
+/* #toggle-buttons {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#toggle-buttons button {
+    background-color: #ffffff;
+    border: none;
+    color: #272f45;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#toggle-buttons button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+.mobile-tip {
+    font-size: 0.8em;
+    color: #444;
+    margin-left: 5px;
+}
+
+#toggle-buttons button.active {
+    background-color: #fcbf49;
+    color: #272f45;
+    transform: scale(1.08);
+} */
+
+/* for toggling between maps with slide */
+#toggle-container {
+    text-align: center;
+    margin: 20px 0;
+    color: white;
+    font-size: 1.1em;
+    user-select: none;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
+    margin: 0 12px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+  }
+  
+  .slider::before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #fcbf49;
+  }
+  
+  input:checked + .slider::before {
+    transform: translateX(28px);
+  }
+  
+
   

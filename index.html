@@ -9,10 +9,17 @@
     </head>
     <body>
 
-        <h1>Zion Church Interactive Map</h2>
-        <div id="map"></div>
-        <h2 style="color:white;text-align:center;">Vertical Map View</h2>
+        <div id="toggle-container">
+            <label class="switch">
+              <input type="checkbox" id="mapToggle">
+              <span class="slider"></span>
+            </label>
+            <span id="toggle-label">Horizontal View</span>
+        </div>
+                  
 
+        <h1>Zion Church Audio Tour</h2>
+        <div id="map"></div>
         <div id="map2"></div>
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script src="index.js"></script>

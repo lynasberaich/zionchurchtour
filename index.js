@@ -1,3 +1,8 @@
+
+
+
+//---------------------CREATING BOTH  VERTICAL AND HORIZONTAL MAPS------------------------
+//HORIZONTAL IS MAP
 var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -2,
@@ -9,8 +14,7 @@ var bounds = [[0, 0], [3135, 4922.5]];
 L.imageOverlay('map3.JPG', bounds).addTo(map);
 map.fitBounds(bounds);
 
-//2904 × 4488
-
+//VERTICAL IS MAP2
 var map2 = L.map('map2', {
     crs: L.CRS.Simple,
     minZoom: -3.5,
@@ -22,8 +26,89 @@ var bounds2 = [[0, 0], [4488, 2904]];
 L.imageOverlay('verticalmap.jpg', bounds2).addTo(map2);
 map2.fitBounds(bounds2);
 
+//------------------- LOGIC TO SWITCH BETWEEN MAPS AND DEFAULT TO CORRECT MAP FOR MOBILE/DESKTOP --------------------
+function showMap(view) {
+    const map1El = document.getElementById('map');
+    const map2El = document.getElementById('map2');
+    const label = document.getElementById('toggle-label');
+
+    if (view === 'horizontal') {
+        map1El.classList.add('visible');
+        map2El.classList.remove('visible');
+        label.textContent = 'Horizontal View';
+
+        setTimeout(() => {
+            map.invalidateSize();
+            map.fitBounds([[0, 0], [3135, 4922.5]]);
+        }, 100);
+    } else {
+        map2El.classList.add('visible');
+        map1El.classList.remove('visible');
+        label.textContent = 'Vertical View (Best on Mobile)';
+
+        setTimeout(() => {
+            map2.invalidateSize();
+            map2.fitBounds([[0, 0], [4488, 2904]]);
+        }, 100);
+    }
+}
 
 
+//GET CURRENT TOGGLE
+const label = document.getElementById('toggle-label');
+const toggle = document.getElementById('mapToggle');
+if (window.innerWidth <= 768) {
+    toggle.checked = true;
+    showMap('vertical');
+} else {
+    toggle.checked = false;
+    showMap('horizontal');
+}
+
+// Toggle behavior
+toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+        showMap('vertical');
+        label.textContent = 'Vertical View (Best on Mobile)';
+    } else {
+        showMap('horizontal');
+        label.textContent = 'Horizontal View';
+    }
+});
+
+// Swipe support
+toggle.addEventListener('change', () => {
+    showMap(toggle.checked ? 'vertical' : 'horizontal');
+});
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const threshold = 50;
+    if (touchEndX < touchStartX - threshold) {
+        toggle.checked = true;
+        showMap('vertical');
+    } else if (touchEndX > touchStartX + threshold) {
+        toggle.checked = false;
+        showMap('horizontal');
+    }
+}
+
+
+
+
+
+//----------------- CREATING ALL ICONS AND LINKING THEM TO LISTS --------------------
 var listeningIcon = L.icon({
     iconUrl: 'icon.PNG',
     iconSize: [64, 64],
@@ -31,196 +116,57 @@ var listeningIcon = L.icon({
     popupAnchor: [0, -64]
 });
 
-var stopOne = L.icon({
-    iconUrl: 'stop1.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopOneMarker = L.marker([1635, 4000], { icon: stopOne }).addTo(map);
-
-stopOneMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 1: Beginnings of Zion</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopTwo = L.icon({
-    iconUrl: 'stop2.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopTwoMarker = L.marker([1800, 3700], { icon: stopTwo }).addTo(map);
-
-stopTwoMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 2: The Early Church in Colonial Times</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
+const images = ['stop1.PNG', 'stop2.PNG', 'stop3.PNG', 'stop4.PNG', 'stop5.PNG', 'stop6.PNG', 'stop7.PNG', 'stop8.PNG', 'stop9.PNG', 'stop10.PNG', 'stop11.PNG', 'stop12.PNG']
+const horizontalCoords = [[1635, 4000], [1500, 3700], [1800, 3700], [1640, 3525], [1500, 2750],[1800, 2750], [1500, 2200], [1800, 1000], [1000, 2000], [1000, 2350], [2075, 2050], [2075, 1700]]
+const titles = [
+    "Beginnings of Zion", "The Early Church in Colonial Times", "The Enlightenment", "The Renovations of the 1840s",
+    "The Golden Age of Zion", "The Stained Glass Windows of the Sanctuary", "The Library", "The Adlersaal",
+    "Zion's Garden", "Memorials at Zion", "The Quilt Room", "Acknowledgements"
+  ];
+  
+const links = [
+    "https://www.youtube.com/embed/VIDEO1", 
+    "https://www.youtube.com/embed/VIDEO2", // ... etc
+    "https://www.youtube.com/embed/VIDEO12", 
+    "https://www.youtube.com/embed/VIDEO2",
+    "https://www.youtube.com/embed/VIDEO2", 
+    "https://www.youtube.com/embed/VIDEO2",
+    "https://www.youtube.com/embed/VIDEO2", 
+    "https://www.youtube.com/embed/VIDEO2",
+    "https://www.youtube.com/embed/VIDEO2", 
+    "https://www.youtube.com/embed/VIDEO2",
+    "https://www.youtube.com/embed/VIDEO2", 
+    "https://www.youtube.com/embed/VIDEO2",
+  ];
+  
+const verticalCoords = [
+    [650, 1630], [900, 1850], [900, 1450], [1150, 1630], [1900, 1850], [1900, 1450],
+    [2200, 1400], [3600, 1650], [2550, 1000], [1900, 1100], [2550, 2000], [2550, 2200]
+  ];
 
 
-var stopThree = L.icon({
-    iconUrl: 'stop3.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
+for (let i = 0; i < images.length; i++) {
+    const icon = L.icon({
+        iconUrl: images[i],
+        iconSize: [64, 64],
+        iconAnchor: [32, 64],
+        popupAnchor: [0, -64]
+    });
 
-var stopThreeMarker = L.marker([1500, 3700], { icon: stopThree }).addTo(map);
+    const popupHTML = `
+        <div style="width:250px">
+            <strong>Stop ${i + 1}: ${titles[i]}</strong><br>
+            <iframe width="100%" height="150" src="${links[i]}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    `;
 
-stopThreeMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 3: The Enlightenment</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
+    // Marker on horizontal map
+    L.marker(horizontalCoords[i], { icon: icon })
+        .addTo(map)
+        .bindPopup(popupHTML);
 
-var stopFour = L.icon({
-    iconUrl: 'stop4.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopFourMarker = L.marker([1640, 3525], { icon: stopFour }).addTo(map);
-
-stopFourMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 4: The Rennovations of the 1840s</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-
-var stopFive = L.icon({
-    iconUrl: 'stop5.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopFiveMarker = L.marker([1500, 2750], { icon: stopFive }).addTo(map);
-
-stopFiveMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 5: The Golden Age of Zion</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopSix = L.icon({
-    iconUrl: 'stop6.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopSixMarker = L.marker([1800, 2750], { icon: stopSix }).addTo(map);
-
-stopSixMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 6: The Stained Glass Windows of the Sanctuary</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopSeven = L.icon({
-    iconUrl: 'stop7.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopSevenMarker = L.marker([1500, 2200], { icon: stopSeven }).addTo(map);
-
-stopSevenMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 7: The Library</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopEight = L.icon({
-    iconUrl: 'stop8.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopEightMarker = L.marker([1800, 1000], { icon: stopEight }).addTo(map);
-
-stopEightMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 8: The Adlersaal</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopNine = L.icon({
-    iconUrl: 'stop9.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopNineMarker = L.marker([1000, 2000], { icon: stopNine }).addTo(map);
-
-stopNineMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 8: Zion's Garden</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopTen = L.icon({
-    iconUrl: 'stop10.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopTenMarker = L.marker([1000, 2350], { icon: stopTen }).addTo(map);
-
-stopTenMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 10: Memorial's at Zion</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopEleven = L.icon({
-    iconUrl: 'stop11.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopElevenMarker = L.marker([2075, 2050], { icon: stopEleven }).addTo(map);
-
-stopElevenMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 11: The Quilt Room</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
-
-var stopTwelve = L.icon({
-    iconUrl: 'stop12.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
-
-var stopTwelveMarker = L.marker([2075, 1700], { icon: stopTwelve }).addTo(map);
-
-stopTwelveMarker.bindPopup(`
-<div style="width:250px">
-    <strong>Stop 12: Acknowledgements</strong><br>
-    <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-</div>
-`);
+    // Marker on vertical map
+    L.marker(verticalCoords[i], { icon: icon })
+        .addTo(map2)
+        .bindPopup(popupHTML);
+}
