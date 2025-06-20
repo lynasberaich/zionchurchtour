@@ -6,7 +6,7 @@ var map = L.map('map', {
 });
 
 var bounds = [[0, 0], [3135, 4922.5]];
-L.imageOverlay('map3.jpg', bounds).addTo(map);
+L.imageOverlay('map3.JPG', bounds).addTo(map);
 map.fitBounds(bounds);
 
 var listeningIcon = L.icon({
