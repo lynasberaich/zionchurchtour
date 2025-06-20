@@ -107,7 +107,7 @@ var stopSix = L.icon({
 
 var stopSixMarker = L.marker([1800, 2750], { icon: stopSix }).addTo(map);
 
-stopFiveMarker.bindPopup(`
+stopSixMarker.bindPopup(`
 <div style="width:250px">
     <strong>Stop 6: The Stained Glass Windows of the Sanctuary</strong><br>
     <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
@@ -139,7 +139,7 @@ var stopEight = L.icon({
 
 var stopEightMarker = L.marker([1800, 1000], { icon: stopEight }).addTo(map);
 
-stopSevenMarker.bindPopup(`
+stopEightMarker.bindPopup(`
 <div style="width:250px">
     <strong>Stop 8: The Adlersaal</strong><br>
     <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
@@ -171,7 +171,7 @@ var stopTen = L.icon({
 
 var stopTenMarker = L.marker([1000, 2350], { icon: stopTen }).addTo(map);
 
-stopNineMarker.bindPopup(`
+stopTenMarker.bindPopup(`
 <div style="width:250px">
     <strong>Stop 10: Memorial's at Zion</strong><br>
     <iframe width="100%" height="150" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
