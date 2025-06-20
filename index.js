@@ -9,6 +9,21 @@ var bounds = [[0, 0], [3135, 4922.5]];
 L.imageOverlay('map3.JPG', bounds).addTo(map);
 map.fitBounds(bounds);
 
+//2904 × 4488
+
+var map2 = L.map('map2', {
+    crs: L.CRS.Simple,
+    minZoom: -3.5,
+    maxBounds: [[0, 0], [4488, 2904]], // Corrected bounds
+    maxBoundsViscosity: 1.0
+});
+
+var bounds2 = [[0, 0], [4488, 2904]];
+L.imageOverlay('verticalmap.jpg', bounds2).addTo(map2);
+map2.fitBounds(bounds2);
+
+
+
 var listeningIcon = L.icon({
     iconUrl: 'icon.PNG',
     iconSize: [64, 64],

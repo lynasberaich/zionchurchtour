@@ -2,22 +2,36 @@ body {
     margin: 0;
     font-family: sans-serif;
     background-color: #272f45;
-  }
+}
   
-  #map {
+#map {
     height: 90vh;
     width: 80%;
     border: 2px solid white;
     border-radius: 1%;
     margin: 0 auto;
-  }
+    margin-bottom: 20px;
+}
 
-  h1, strong {
+#map2 {
+    aspect-ratio: 2904 / 4488;
+    width: 80%;
+    height: auto;
+    max-height: 90vh;
+    border: 2px solid white;
+    border-radius: 1%;
+    margin: 0 auto 20px auto;
+    display: block;
+}
+
+
+
+h1, strong {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-  }
+}
 
-  h1{
+h1{
     color: white;
     text-align: center;
-  }
+}
   
