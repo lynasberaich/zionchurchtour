@@ -85,13 +85,21 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 document.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
+    // Prevent toggle if swipe starts inside a map container
+    const target = e.target.closest('#map, #map2');
+    if (!target) {
+        touchStartX = e.changedTouches[0].screenX;
+    } else {
+        touchStartX = null;
+    }
 });
 
 document.addEventListener('touchend', e => {
+    if (touchStartX === null) return; // Skip if swipe started on the map
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
 });
+
 
 function handleSwipe() {
     const threshold = 50;
