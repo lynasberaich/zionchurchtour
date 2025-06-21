@@ -24,11 +24,11 @@ body {
     display: block;
 }
 
-h1, strong {
+h1, strong, span {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
-h1{
+h1, span{
     color: white;
     text-align: center;
 }
