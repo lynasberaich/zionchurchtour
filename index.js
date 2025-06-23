@@ -117,64 +117,97 @@ function handleSwipe() {
 
 
 //----------------- CREATING ALL ICONS AND LINKING THEM TO LISTS --------------------
-var listeningIcon = L.icon({
-    iconUrl: 'icon.PNG',
-    iconSize: [64, 64],
-    iconAnchor: [32, 64],
-    popupAnchor: [0, -64]
-});
+// var listeningIcon = L.icon({
+//     iconUrl: 'icon.PNG',
+//     iconSize: [64, 64],
+//     iconAnchor: [32, 64],
+//     popupAnchor: [0, -64]
+// });
 
-const images = ['stop1.PNG', 'stop2.PNG', 'stop3.PNG', 'stop4.PNG', 'stop5.PNG', 'stop6.PNG', 'stop7.PNG', 'stop8.PNG', 'stop9.PNG', 'stop10.PNG', 'stop11.PNG', 'stop12.PNG']
-const horizontalCoords = [[1635, 4000], [1500, 3700], [1800, 3700], [1640, 3525], [1500, 2750],[1800, 2750], [1500, 2200], [1800, 1000], [1000, 2000], [1000, 2350], [2075, 2050], [2075, 1700]]
-const titles = [
-    "Beginnings of Zion", "The Early Church in Colonial Times", "The Enlightenment", "The Renovations of the 1840s",
-    "The Golden Age of Zion", "The Stained Glass Windows of the Sanctuary", "The Library", "The Adlersaal",
-    "Zion's Garden", "Memorials at Zion", "The Quilt Room", "Acknowledgements"
-  ];
+// const images = ['stop1.PNG', 'stop2.PNG', 'stop3.PNG', 'stop4.PNG', 'stop5.PNG', 'stop6.PNG', 'stop7.PNG', 'stop8.PNG', 'stop9.PNG', 'stop10.PNG', 'stop11.PNG', 'stop12.PNG']
+// const horizontalCoords = [[1635, 4000], [1500, 3700], [1800, 3700], [1640, 3525], [1500, 2750],[1800, 2750], [1500, 2200], [1800, 1000], [1000, 2000], [1000, 2350], [2075, 2050], [2075, 1700]]
+// const titles = [
+//     "Beginnings of Zion", "The Early Church in Colonial Times", "The Enlightenment", "The Renovations of the 1840s",
+//     "The Golden Age of Zion", "The Stained Glass Windows of the Sanctuary", "The Library", "The Adlersaal",
+//     "Zion's Garden", "Memorials at Zion", "The Quilt Room", "Acknowledgements"
+//   ];
   
-const links = [
-    "https://www.youtube.com/embed/VIDEO1", 
-    "https://www.youtube.com/embed/VIDEO2", // ... etc
-    "https://www.youtube.com/embed/VIDEO12", 
-    "https://www.youtube.com/embed/VIDEO2",
-    "https://www.youtube.com/embed/VIDEO2", 
-    "https://www.youtube.com/embed/VIDEO2",
-    "https://www.youtube.com/embed/VIDEO2", 
-    "https://www.youtube.com/embed/VIDEO2",
-    "https://www.youtube.com/embed/VIDEO2", 
-    "https://www.youtube.com/embed/VIDEO2",
-    "https://www.youtube.com/embed/VIDEO2", 
-    "https://www.youtube.com/embed/VIDEO2",
-  ];
+// const links = [
+//     "https://www.youtube.com/embed/VIDEO1", 
+//     "https://www.youtube.com/embed/VIDEO2", // ... etc
+//     "https://www.youtube.com/embed/VIDEO12", 
+//     "https://www.youtube.com/embed/VIDEO2",
+//     "https://www.youtube.com/embed/VIDEO2", 
+//     "https://www.youtube.com/embed/VIDEO2",
+//     "https://www.youtube.com/embed/VIDEO2", 
+//     "https://www.youtube.com/embed/VIDEO2",
+//     "https://www.youtube.com/embed/VIDEO2", 
+//     "https://www.youtube.com/embed/VIDEO2",
+//     "https://www.youtube.com/embed/VIDEO2", 
+//     "https://www.youtube.com/embed/VIDEO2",
+//   ];
   
-const verticalCoords = [
-    [650, 1630], [1000, 1450], [1000, 1850], [1250, 1630], [1900, 1850], [1900, 1450],
-    [2400, 1400], [3600, 1650], [2550, 1000], [1900, 1100], [2650, 2000], [2650, 2200]
-  ];
+// const verticalCoords = [
+//     [650, 1630], [1000, 1450], [1000, 1850], [1250, 1630], [1900, 1850], [1900, 1450],
+//     [2400, 1400], [3600, 1650], [2550, 1000], [1900, 1100], [2650, 2000], [2650, 2200]
+//   ];
 
 
-for (let i = 0; i < images.length; i++) {
-    const icon = L.icon({
-        iconUrl: images[i],
+// for (let i = 0; i < images.length; i++) {
+//     const icon = L.icon({
+//         iconUrl: images[i],
+//         iconSize: [64, 64],
+//         iconAnchor: [32, 64],
+//         popupAnchor: [0, -64]
+//     });
+
+//     const popupHTML = `
+//         <div style="width:250px">
+//             <strong>Stop ${i + 1}: ${titles[i]}</strong><br>
+//             <iframe width="100%" height="150" src="${links[i]}" frameborder="0" allowfullscreen></iframe>
+//         </div>
+//     `;
+
+//     // Marker on horizontal map
+//     L.marker(horizontalCoords[i], { icon: icon })
+//         .addTo(map)
+//         .bindPopup(popupHTML);
+
+//     // Marker on vertical map
+//     L.marker(verticalCoords[i], { icon: icon })
+//         .addTo(map2)
+//         .bindPopup(popupHTML);
+// }
+
+function toEmbedURL(url) {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+  }
+
+
+
+fetch('https://api.sheetbest.com/sheets/b81f61a8-6e85-4373-a14f-fbf42a25503c')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach((row, i) => {
+      const icon = L.icon({
+        iconUrl: row.Image,
         iconSize: [64, 64],
         iconAnchor: [32, 64],
         popupAnchor: [0, -64]
     });
 
+    const embedURL = toEmbedURL(row.YouTubeLink);
+
     const popupHTML = `
-        <div style="width:250px">
-            <strong>Stop ${i + 1}: ${titles[i]}</strong><br>
-            <iframe width="100%" height="150" src="${links[i]}" frameborder="0" allowfullscreen></iframe>
-        </div>
+    <div style="width:250px">
+        <strong>Stop ${row.Stop}: ${row.Title}</strong><br>
+        <iframe width="100%" height="150" src="${embedURL}" frameborder="0" allowfullscreen></iframe>
+    </div>
     `;
 
-    // Marker on horizontal map
-    L.marker(horizontalCoords[i], { icon: icon })
-        .addTo(map)
-        .bindPopup(popupHTML);
+      L.marker([row.HorizontalX, row.HorizontalY], { icon }).addTo(map).bindPopup(popupHTML);
+      L.marker([row.VerticalX, row.VerticalY], { icon }).addTo(map2).bindPopup(popupHTML);
+    });
+  });
 
-    // Marker on vertical map
-    L.marker(verticalCoords[i], { icon: icon })
-        .addTo(map2)
-        .bindPopup(popupHTML);
-}
