@@ -24,7 +24,7 @@ body {
     display: block;
 }
 
-h1, strong, span {
+h1, strong, span, h2, input, button {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
@@ -41,42 +41,6 @@ h1, span{
 #map.visible, #map2.visible {
     display: block;
 }
-
-/* #toggle-buttons {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#toggle-buttons button {
-    background-color: #ffffff;
-    border: none;
-    color: #272f45;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 10px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#toggle-buttons button:hover {
-    background-color: #ddd;
-    transform: scale(1.05);
-}
-
-.mobile-tip {
-    font-size: 0.8em;
-    color: #444;
-    margin-left: 5px;
-}
-
-#toggle-buttons button.active {
-    background-color: #fcbf49;
-    color: #272f45;
-    transform: scale(1.08);
-} */
 
 /* for toggling between maps with slide */
 #toggle-container {
