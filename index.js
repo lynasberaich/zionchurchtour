@@ -157,7 +157,7 @@ function toEmbedURL(url) {
         const tags = row.Tags?.split(',').map(tag => tag.trim()) || ['Other'];
         tags.forEach(tag => allTags.add(tag));
   
-        const tagHTML = tags.map(tag => '<span class="tag-label">${tag}</span>').join('');
+        const tagHTML = tags.map(tag => `<span class="tag-label">${tag}</span>`).join('');
         const popupHTML = `
           <div style="width:250px">
             <strong>Stop ${stopNumber}: ${row.Title}</strong><br>
