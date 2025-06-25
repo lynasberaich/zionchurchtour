@@ -5,8 +5,8 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
-    <meta http-equiv='pragma' content='no-cache'>
+        <meta http-equiv='expires' content='0'> 
+        <meta http-equiv='pragma' content='no-cache'>
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
         <link rel="stylesheet" href="styles.css" />
     </head>
@@ -24,6 +24,17 @@
         <h1>Zion Church Audio Tour</h2>
         <div id="map"></div>
         <div id="map2"></div>
+
+        <div id="tag-filter-container">
+            <h2>Search Tags</h2>
+            <input type="text" id="tag-search" placeholder="Type to search tags..." />
+            <div id="tag-suggestions"></div>
+            <div id="selected-tags-container"></div>
+            <button id="reset-tags-btn">Reset Filters</button>
+        </div>
+          
+          
+
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script src="index.js"></script>
         

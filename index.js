@@ -1,6 +1,3 @@
-
-
-
 //---------------------CREATING BOTH  VERTICAL AND HORIZONTAL MAPS------------------------
 //HORIZONTAL IS MAP
 var map = L.map('map', {
@@ -18,7 +15,7 @@ map.fitBounds(bounds);
 var map2 = L.map('map2', {
     crs: L.CRS.Simple,
     minZoom: -3.5,
-    maxBounds: [[0, 0], [4488, 2904]], // Corrected bounds
+    maxBounds: [[0, 0], [4488, 2904]], 
     maxBoundsViscosity: 1.0
 });
 
@@ -27,6 +24,10 @@ L.imageOverlay('verticalmap.jpg', bounds2).addTo(map2);
 map2.fitBounds(bounds2);
 
 //------------------- LOGIC TO SWITCH BETWEEN MAPS AND DEFAULT TO CORRECT MAP FOR MOBILE/DESKTOP --------------------
+//vertical looks better on mobile
+//horizontal looks better on laptop
+
+//function to switch between maps
 function showMap(view) {
     const map1El = document.getElementById('map');
     const map2El = document.getElementById('map2');
@@ -38,6 +39,7 @@ function showMap(view) {
         label.textContent = 'Horizontal View';
 
         setTimeout(() => {
+            //in order to render the map correctly
             map.invalidateSize();
             map.fitBounds([[0, 0], [3135, 4922.5]]);
         }, 100);
@@ -54,18 +56,20 @@ function showMap(view) {
 }
 
 
-//GET CURRENT TOGGLE
+//GET CURRENT VIEW BASED ON SCREEN SIZE
 const label = document.getElementById('toggle-label');
 const toggle = document.getElementById('mapToggle');
 if (window.innerWidth <= 768) {
     toggle.checked = true;
+    //set it to the correct map
     showMap('vertical');
 } else {
     toggle.checked = false;
+    //set it to the correct map
     showMap('horizontal');
 }
 
-// Toggle behavior
+// mode toggle functionality
 toggle.addEventListener('change', () => {
     if (toggle.checked) {
         showMap('vertical');
@@ -76,7 +80,7 @@ toggle.addEventListener('change', () => {
     }
 });
 
-// Swipe support
+// swipe support
 toggle.addEventListener('change', () => {
     showMap(toggle.checked ? 'vertical' : 'horizontal');
 });
@@ -85,7 +89,7 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 document.addEventListener('touchstart', e => {
-    // Prevent toggle if swipe starts inside a map container
+    // prevent toggle if swipe starts inside a map container
     const target = e.target.closest('#map, #map2');
     if (!target) {
         touchStartX = e.changedTouches[0].screenX;
@@ -95,7 +99,7 @@ document.addEventListener('touchstart', e => {
 });
 
 document.addEventListener('touchend', e => {
-    if (touchStartX === null) return; // Skip if swipe started on the map
+    if (touchStartX === null) return; // skip if swipe started on the map
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
 });
@@ -117,97 +121,304 @@ function handleSwipe() {
 
 
 //----------------- CREATING ALL ICONS AND LINKING THEM TO LISTS --------------------
-// var listeningIcon = L.icon({
-//     iconUrl: 'icon.PNG',
-//     iconSize: [64, 64],
-//     iconAnchor: [32, 64],
-//     popupAnchor: [0, -64]
-// });
 
-// const images = ['stop1.PNG', 'stop2.PNG', 'stop3.PNG', 'stop4.PNG', 'stop5.PNG', 'stop6.PNG', 'stop7.PNG', 'stop8.PNG', 'stop9.PNG', 'stop10.PNG', 'stop11.PNG', 'stop12.PNG']
-// const horizontalCoords = [[1635, 4000], [1500, 3700], [1800, 3700], [1640, 3525], [1500, 2750],[1800, 2750], [1500, 2200], [1800, 1000], [1000, 2000], [1000, 2350], [2075, 2050], [2075, 1700]]
-// const titles = [
-//     "Beginnings of Zion", "The Early Church in Colonial Times", "The Enlightenment", "The Renovations of the 1840s",
-//     "The Golden Age of Zion", "The Stained Glass Windows of the Sanctuary", "The Library", "The Adlersaal",
-//     "Zion's Garden", "Memorials at Zion", "The Quilt Room", "Acknowledgements"
-//   ];
-  
-// const links = [
-//     "https://www.youtube.com/embed/VIDEO1", 
-//     "https://www.youtube.com/embed/VIDEO2", // ... etc
-//     "https://www.youtube.com/embed/VIDEO12", 
-//     "https://www.youtube.com/embed/VIDEO2",
-//     "https://www.youtube.com/embed/VIDEO2", 
-//     "https://www.youtube.com/embed/VIDEO2",
-//     "https://www.youtube.com/embed/VIDEO2", 
-//     "https://www.youtube.com/embed/VIDEO2",
-//     "https://www.youtube.com/embed/VIDEO2", 
-//     "https://www.youtube.com/embed/VIDEO2",
-//     "https://www.youtube.com/embed/VIDEO2", 
-//     "https://www.youtube.com/embed/VIDEO2",
-//   ];
-  
-// const verticalCoords = [
-//     [650, 1630], [1000, 1450], [1000, 1850], [1250, 1630], [1900, 1850], [1900, 1450],
-//     [2400, 1400], [3600, 1650], [2550, 1000], [1900, 1100], [2650, 2000], [2650, 2200]
-//   ];
-
-
-// for (let i = 0; i < images.length; i++) {
-//     const icon = L.icon({
-//         iconUrl: images[i],
-//         iconSize: [64, 64],
-//         iconAnchor: [32, 64],
-//         popupAnchor: [0, -64]
-//     });
-
-//     const popupHTML = `
-//         <div style="width:250px">
-//             <strong>Stop ${i + 1}: ${titles[i]}</strong><br>
-//             <iframe width="100%" height="150" src="${links[i]}" frameborder="0" allowfullscreen></iframe>
-//         </div>
-//     `;
-
-//     // Marker on horizontal map
-//     L.marker(horizontalCoords[i], { icon: icon })
-//         .addTo(map)
-//         .bindPopup(popupHTML);
-
-//     // Marker on vertical map
-//     L.marker(verticalCoords[i], { icon: icon })
-//         .addTo(map2)
-//         .bindPopup(popupHTML);
-// }
 
 function toEmbedURL(url) {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/);
     return match ? `https://www.youtube.com/embed/${match[1]}` : url;
   }
-
-
-
-fetch('https://api.sheetbest.com/sheets/b81f61a8-6e85-4373-a14f-fbf42a25503c')
-  .then(response => response.json())
-  .then(data => {
-    data.forEach((row, i) => {
-      const icon = L.icon({
-        iconUrl: row.Image,
-        iconSize: [64, 64],
-        iconAnchor: [32, 64],
-        popupAnchor: [0, -64]
+  
+  const allMarkers = [];
+  const allTags = new Set();
+  const tagToStopsMap = new Map();
+  const selectedTags = new Set();
+  
+  fetch('https://api.sheetbest.com/sheets/b81f61a8-6e85-4373-a14f-fbf42a25503c')
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(row => {
+        const stopNumber = row.Stop.trim();
+  
+        const defaultIcon = L.icon({
+          iconUrl: row.Image,
+          iconSize: [64, 64],
+          iconAnchor: [32, 64],
+          popupAnchor: [0, -64]
+        });
+  
+        const highlightIcon = L.icon({
+          iconUrl: `highlightStop${stopNumber}.png`, // highlightStop1.png, highlightStop2.png, etc.
+          iconSize: [64, 64],
+          iconAnchor: [32, 64],
+          popupAnchor: [0, -64]
+        });
+  
+        const embedURL = toEmbedURL(row.YouTubeLink);
+        const tags = row.Tags?.split(',').map(tag => tag.trim()) || ['Other'];
+        tags.forEach(tag => allTags.add(tag));
+  
+        const tagHTML = tags.map(tag => `<span class="tag-label">${tag}</span>`).join('');
+        const popupHTML = `
+          <div style="width:250px">
+            <strong>Stop ${stopNumber}: ${row.Title}</strong><br>
+            <iframe width="100%" height="150" src="${embedURL}" frameborder="0" allowfullscreen></iframe>
+            <div style="margin-top:8px;">${tagHTML}</div>
+          </div>
+        `;
+  
+        const marker1 = L.marker([row.HorizontalX, row.HorizontalY], { icon: defaultIcon }).bindPopup(popupHTML).addTo(map);
+        const marker2 = L.marker([row.VerticalX, row.VerticalY], { icon: defaultIcon }).bindPopup(popupHTML).addTo(map2);
+  
+        allMarkers.push({ marker1, marker2, tags, defaultIcon, highlightIcon });
+  
+        tags.forEach(tag => {
+          if (!tagToStopsMap.has(tag)) tagToStopsMap.set(tag, []);
+          tagToStopsMap.get(tag).push({ marker1, marker2 });
+        });
+      });
+  
+      initTagSearch();
     });
-
-    const embedURL = toEmbedURL(row.YouTubeLink);
-
-    const popupHTML = `
-    <div style="width:250px">
-        <strong>Stop ${row.Stop}: ${row.Title}</strong><br>
-        <iframe width="100%" height="150" src="${embedURL}" frameborder="0" allowfullscreen></iframe>
-    </div>
-    `;
-
-      L.marker([row.HorizontalX, row.HorizontalY], { icon }).addTo(map).bindPopup(popupHTML);
-      L.marker([row.VerticalX, row.VerticalY], { icon }).addTo(map2).bindPopup(popupHTML);
+  
+  function initTagSearch() {
+    const searchInput = document.getElementById('tag-search');
+    const suggestions = document.getElementById('tag-suggestions');
+    const resetBtn = document.getElementById('reset-tags-btn');
+  
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      suggestions.innerHTML = '';
+      if (!query) return;
+  
+      const matchingTags = Array.from(allTags).filter(tag =>
+        tag.toLowerCase().includes(query)
+      );
+  
+      matchingTags.forEach(tag => {
+        const btn = document.createElement('div');
+        btn.className = 'suggestion-tag';
+        btn.textContent = tag;
+        btn.addEventListener('click', () => {
+          if (!selectedTags.has(tag)) {
+            selectedTags.add(tag);
+            updateSelectedTagsUI();
+            applyTagHighlights();
+            searchInput.value = '';
+            suggestions.innerHTML = '';
+          }
+        });
+        suggestions.appendChild(btn);
+      });
     });
-  });
+  
+    resetBtn.addEventListener('click', () => {
+      selectedTags.clear();
+      updateSelectedTagsUI();
+      applyTagHighlights();
+    });
+  }
+  
+  function updateSelectedTagsUI() {
+    const container = document.getElementById('selected-tags-container');
+    container.innerHTML = '';
+    selectedTags.forEach(tag => {
+      const tagEl = document.createElement('div');
+      tagEl.className = 'selected-tag';
+      tagEl.textContent = tag;
+      tagEl.addEventListener('click', () => {
+        selectedTags.delete(tag);
+        updateSelectedTagsUI();
+        applyTagHighlights();
+      });
+      container.appendChild(tagEl);
+    });
+  }
+  
+  function applyTagHighlights() {
+    allMarkers.forEach(marker => {
+      const isMatch = [...selectedTags].some(tag => marker.tags.includes(tag));
+      const icon = (selectedTags.size > 0 && isMatch) ? marker.highlightIcon : marker.defaultIcon;
+      marker.marker1.setIcon(icon);
+      marker.marker2.setIcon(icon);
+    });
+  }
 
+
+// //function to correct youtube links
+// function toEmbedURL(url) {
+//     const match = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/);
+//     return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+//   }
+
+
+// //fetching from google sheets so that links can be changed
+// const allMarkers = [];
+// const allTags = new Set();
+// const tagToStopsMap = new Map();
+
+// fetch('https://api.sheetbest.com/sheets/b81f61a8-6e85-4373-a14f-fbf42a25503c')
+//   .then(response => response.json())
+//   .then(data => {
+//     data.forEach((row, i) => {
+//       const icon = L.icon({
+//         iconUrl: row.Image,
+//         iconSize: [64, 64],
+//         iconAnchor: [32, 64],
+//         popupAnchor: [0, -64]
+//       });
+
+//       const embedURL = toEmbedURL(row.YouTubeLink);
+
+//       // Parse tag string into an array
+//       const tags = row.Tags?.split(',').map(tag => tag.trim()) || ['Other'];
+//       tags.forEach(tag => allTags.add(tag));
+
+//       // Format popup HTML with tag labels
+//       const tagHTML = tags.map(tag => `<span class="tag-label">${tag}</span>`).join('');
+//       const popupHTML = `
+//         <div style="width:250px">
+//             <strong>Stop ${row.Stop}: ${row.Title}</strong><br>
+//             <iframe width="100%" height="150" src="${embedURL}" frameborder="0" allowfullscreen></iframe>
+//             <div style="margin-top:8px;">${tagHTML}</div>
+//         </div>
+//       `;
+
+//       const marker1 = L.marker([row.HorizontalX, row.HorizontalY], { icon }).bindPopup(popupHTML).addTo(map);
+//       const marker2 = L.marker([row.VerticalX, row.VerticalY], { icon }).bindPopup(popupHTML).addTo(map2);
+
+//       allMarkers.push({ marker1, marker2, tags });
+
+//       // Map each tag to a list of markers
+//       tags.forEach(tag => {
+//         if (!tagToStopsMap.has(tag)) tagToStopsMap.set(tag, []);
+//         tagToStopsMap.get(tag).push({ marker1, marker2 });
+//       });
+//     });
+
+//     initTagSearch();
+//   });
+
+// //   function initTagSearch() {
+// //     const searchInput = document.getElementById('tag-search');
+// //     const suggestions = document.getElementById('tag-suggestions');
+  
+// //     searchInput.addEventListener('input', () => {
+// //       const query = searchInput.value.trim().toLowerCase();
+// //       suggestions.innerHTML = '';
+  
+// //       if (!query) return;
+  
+// //       const matchingTags = Array.from(allTags).filter(tag =>
+// //         tag.toLowerCase().includes(query)
+// //       );
+  
+// //       matchingTags.forEach(tag => {
+// //         const btn = document.createElement('div');
+// //         btn.className = 'suggestion-tag';
+// //         btn.textContent = tag;
+  
+// //         btn.addEventListener('click', () => {
+// //           highlightMarkers(tag);
+// //         });
+  
+// //         suggestions.appendChild(btn);
+// //       });
+// //     });
+// //   }
+
+// const selectedTags = new Set();
+// const defaultIcon = L.icon({
+//   iconUrl: 'default-icon.png', // replace with your original icon path
+//   iconSize: [64, 64],
+//   iconAnchor: [32, 64],
+//   popupAnchor: [0, -64]
+// });
+
+// const highlightIcon = L.icon({
+//   iconUrl: 'highlight-icon.png', // distinct version
+//   iconSize: [64, 64],
+//   iconAnchor: [32, 64],
+//   popupAnchor: [0, -64]
+// });
+
+// function initTagSearch() {
+//   const searchInput = document.getElementById('tag-search');
+//   const suggestions = document.getElementById('tag-suggestions');
+//   const resetBtn = document.getElementById('reset-tags-btn');
+
+//   searchInput.addEventListener('input', () => {
+//     const query = searchInput.value.trim().toLowerCase();
+//     suggestions.innerHTML = '';
+//     if (!query) return;
+
+//     const matchingTags = Array.from(allTags).filter(tag =>
+//       tag.toLowerCase().includes(query)
+//     );
+
+//     matchingTags.forEach(tag => {
+//       const btn = document.createElement('div');
+//       btn.className = 'suggestion-tag';
+//       btn.textContent = tag;
+//       btn.addEventListener('click', () => {
+//         if (!selectedTags.has(tag)) {
+//           selectedTags.add(tag);
+//           updateSelectedTagsUI();
+//           applyTagHighlights();
+//         }
+//       });
+//       suggestions.appendChild(btn);
+//     });
+//   });
+
+//   resetBtn.addEventListener('click', () => {
+//     selectedTags.clear();
+//     updateSelectedTagsUI();
+//     applyTagHighlights();
+//   });
+// }
+
+// function updateSelectedTagsUI() {
+//   const container = document.getElementById('selected-tags-container');
+//   container.innerHTML = '';
+//   selectedTags.forEach(tag => {
+//     const tagEl = document.createElement('div');
+//     tagEl.className = 'selected-tag';
+//     tagEl.textContent = tag;
+//     tagEl.addEventListener('click', () => {
+//       selectedTags.delete(tag);
+//       updateSelectedTagsUI();
+//       applyTagHighlights();
+//     });
+//     container.appendChild(tagEl);
+//   });
+// }
+
+// function applyTagHighlights() {
+//   allMarkers.forEach(({ marker1, marker2, tags }) => {
+//     const isMatch = [...selectedTags].some(tag => tags.includes(tag));
+//     const iconToUse = isMatch && selectedTags.size > 0 ? highlightIcon : defaultIcon;
+//     marker1.setIcon(iconToUse);
+//     marker2.setIcon(iconToUse);
+//   });
+// }
+
+  
+// function highlightMarkers(tag) {
+//     allMarkers.forEach(({ marker1, marker2 }) => {
+//         marker1.setIcon(marker1.options.icon); // reset icon
+//         marker2.setIcon(marker2.options.icon);
+//     });
+
+//     const highlightIcon = L.icon({
+//         iconUrl: 'highlight-icon.jpg', // You’ll need to provide a custom colored icon
+//         iconSize: [64, 64],
+//         iconAnchor: [32, 64],
+//         popupAnchor: [0, -64]
+//     });
+
+//     const stops = tagToStopsMap.get(tag) || [];
+//     stops.forEach(({ marker1, marker2 }) => {
+//         marker1.setIcon(highlightIcon);
+//         marker2.setIcon(highlightIcon);
+//     });
+// }
