@@ -147,7 +147,7 @@ function toEmbedURL(url) {
         });
   
         const highlightIcon = L.icon({
-          iconUrl: `highlightStop${stopNumber}.png`, // highlightStop1.png, highlightStop2.png, etc.
+          iconUrl: `highlightStop${stopNumber}.PNG`, // highlightStop1.png, highlightStop2.png, etc.
           iconSize: [64, 64],
           iconAnchor: [32, 64],
           popupAnchor: [0, -64]
