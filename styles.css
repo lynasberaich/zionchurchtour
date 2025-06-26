@@ -216,6 +216,25 @@ h1, span{
 }
 
 
+/* Limit popup width on smaller screens */
+.leaflet-popup-content {
+    max-width: 250px;
+    width: 100%;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .leaflet-popup-content {
+        max-width: 200px;
+        font-size: 0.9em;
+    }
+
+    .leaflet-popup-content iframe {
+        height: 120px;
+    }
+}
+
   
 
   

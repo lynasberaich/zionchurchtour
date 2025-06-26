@@ -152,22 +152,44 @@ function toEmbedURL(url) {
           iconAnchor: [32, 64],
           popupAnchor: [0, -64]
         });
+
+        const popupOptions = {
+            autoPan: true,
+            autoPanPadding: [20, 20],
+            keepInView: false,
+            className: 'custom-popup'
+          };
   
         const embedURL = toEmbedURL(row.YouTubeLink);
         const tags = row.Tags?.split(',').map(tag => tag.trim()) || ['Other'];
         tags.forEach(tag => allTags.add(tag));
-  
         const tagHTML = tags.map(tag => `<span class="tag-label">${tag}</span>`).join('');
+  
         const popupHTML = `
-          <div style="width:250px">
+        <div class="popup-content">
             <strong>Stop ${stopNumber}: ${row.Title}</strong><br>
             <iframe width="100%" height="150" src="${embedURL}" frameborder="0" allowfullscreen></iframe>
             <div style="margin-top:8px;">${tagHTML}</div>
-          </div>
+        </div>
         `;
   
-        const marker1 = L.marker([row.HorizontalX, row.HorizontalY], { icon: defaultIcon }).bindPopup(popupHTML).addTo(map);
-        const marker2 = L.marker([row.VerticalX, row.VerticalY], { icon: defaultIcon }).bindPopup(popupHTML).addTo(map2);
+        const marker1 = L.marker([row.HorizontalX, row.HorizontalY], { icon: defaultIcon }).bindPopup(popupHTML, popupOptions).addTo(map);
+        const marker2 = L.marker([row.VerticalX, row.VerticalY], { icon: defaultIcon }).bindPopup(popupHTML, popupOptions).addTo(map2);
+        marker1.on('popupopen', () => {
+            map.setMaxBounds(null);
+        });
+        
+        marker2.on('popupopen', () => {
+            map2.setMaxBounds(null);
+        });
+
+        marker1.on('popupclose', () => {
+            map.setMaxBounds([[0, 0], [3135, 4922.5]]);
+        });
+        
+        marker2.on('popupclose', () => {
+            map2.setMaxBounds([[0, 0], [4488, 2904]]);
+        });
   
         allMarkers.push({ marker1, marker2, tags, defaultIcon, highlightIcon });
   
