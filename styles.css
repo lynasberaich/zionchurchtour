@@ -24,7 +24,7 @@ body {
     display: block;
 }
 
-h1, strong, span, h2, input, button {
+h1, strong, span, h2, input, button, p {
     font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
