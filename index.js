@@ -60,12 +60,12 @@ function showMap(view) {
 const label = document.getElementById('toggle-label');
 const toggle = document.getElementById('mapToggle');
 if (window.innerWidth <= 768) {
+    document.body.classList.add('mobile');
     toggle.checked = true;
-    //set it to the correct map
     showMap('vertical');
 } else {
+    document.body.classList.remove('mobile');
     toggle.checked = false;
-    //set it to the correct map
     showMap('horizontal');
 }
 
@@ -125,7 +125,7 @@ function handleSwipe() {
 
 function toEmbedURL(url) {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/);
-    return match ? 'https://www.youtube.com/embed/${match[1]}' : url;
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
   }
   
   const allMarkers = [];
@@ -133,7 +133,7 @@ function toEmbedURL(url) {
   const tagToStopsMap = new Map();
   const selectedTags = new Set();
   
-  fetch('https://api.sheetbest.com/sheets/b81f61a8-6e85-4373-a14f-fbf42a25503c')
+  fetch('https://api.sheetbest.com/sheets/bea0e9f4-dae7-44b0-8f38-641fd53b7907')
     .then(response => response.json())
     .then(data => {
       data.forEach(row => {

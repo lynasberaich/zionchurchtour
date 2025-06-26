@@ -235,6 +235,84 @@ h1, span{
     }
 }
 
+/* Desktop view: top-left logo fixed */
+#top-left-logo {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
+}
+
+#top-left-logo img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Bottom logo container (always shown) */
+#logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 40px auto;
+    padding-bottom: 20px;
+}
+
+#logo-container img {
+    height: 60px;
+    max-width: 120px;
+    object-fit: contain;
+}
+
+/* On mobile: hide fixed top logo and move it to bottom */
+@media (max-width: 768px) {
+    #top-left-logo {
+        position: static;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #top-left-logo img {
+        height: 50px;
+    }
+
+    #logo-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    #logo-container::before {
+        content: "";
+        display: block;
+    }
+
+    #logo-container img {
+        height: 50px;
+    }
+
+    /* Show top-left logo inside bottom container */
+    body.mobile #logo-container {
+        flex-direction: row;
+    }
+
+    body.mobile #logo-container::before {
+        content: none;
+    }
+
+    /* Actually move top-left into the bottom container */
+    body.mobile #top-left-logo {
+        display: block;
+    }
+
+    /* Hide fixed version */
+    body.mobile #top-left-logo.fixed {
+        display: none;
+    }
+}
+
   
 
   
